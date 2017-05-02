@@ -38,6 +38,13 @@ import rcms.utilities.daqexpert.reasoning.logic.failures.disconnected.ProblemWit
 import rcms.utilities.daqexpert.reasoning.logic.failures.disconnected.FEDDisconnected;
 public enum LogicModuleRegistry {
 
+	/** IMPORTANT NOTE: The order in which these modules are defined here
+	 *                  is used to derive their persistency id. As a consequence,
+	 *                  in order not to break the functionality of reading
+	 *                  archived logic module results, the order must stay the same
+	 *                  and new logic modules must be appended at the end of this list.
+	 */
+	
 	NoRate(new NoRate(), ConditionGroup.NO_RATE, "Satisfied when no rate in DAQ fed builder summary", 10),
 	RateOutOfRange(new RateOutOfRange(), ConditionGroup.RATE_OUT_OF_RANGE, "", 9),
 	BeamActive(new BeamActive(), ConditionGroup.BEAM_ACTIVE, ""),
@@ -77,6 +84,8 @@ public enum LogicModuleRegistry {
 	FEDDisconnected(new FEDDisconnected(), ConditionGroup.FLOWCHART, "", 10014),
 	FMMProblem(new FMMProblem(), ConditionGroup.FLOWCHART, "", 10014),;
 
+	/** add new logic modules here (see the note above) */
+	
 	private LogicModuleRegistry(LogicModule logicModule, ConditionGroup group, String description) {
 		this(logicModule, group, description, 1);
 	}
