@@ -19,7 +19,16 @@ public class FlowchartCase6Test extends FlowchartCaseTestBase {
 		// GMT: Sat, 26 Nov 2016 06:21:35 GMT
 		test("1480141295312.smile");
   }
+	
+	@Test
+	public void testTCDSonlyBusyWarning() throws URISyntaxException {
 
+		// Thu May 18 18:45:42 CEST 2017
+		// see https://github.com/cmsdaq/DAQExpert/issues/56#issuecomment-303091911
+		// TWINMUX (uTCA FED) 100% busy
+		test("1495125942911.smile");
+  }
+	
   private void test(String snapshotFile) throws URISyntaxException {
 		DAQ snapshot = getSnapshot(snapshotFile);
 
