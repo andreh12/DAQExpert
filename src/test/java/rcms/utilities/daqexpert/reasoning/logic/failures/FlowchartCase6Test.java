@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import org.junit.Test;
 
 import rcms.utilities.daqaggregator.data.DAQ;
+import static rcms.utilities.daqexpert.reasoning.logic.failures.FlowchartCaseTestBase.getSnapshot;
 
 /**
  *
@@ -14,9 +15,13 @@ public class FlowchartCase6Test extends FlowchartCaseTestBase {
 
 	@Test
 	public void case1Test() throws URISyntaxException {
-		// GMT: Sat, 26 Nov 2016 06:21:35 GMT
-		DAQ snapshot = getSnapshot("1480141295312.smile");
 
+		// GMT: Sat, 26 Nov 2016 06:21:35 GMT
+		test("1480141295312.smile");
+  }
+
+  private void test(String snapshotFile) throws URISyntaxException {
+		DAQ snapshot = getSnapshot(snapshotFile);
 
 		assertEqualsAndUpdateResults(false, fc1,snapshot);
 		assertEqualsAndUpdateResults(false, fc2,snapshot);
