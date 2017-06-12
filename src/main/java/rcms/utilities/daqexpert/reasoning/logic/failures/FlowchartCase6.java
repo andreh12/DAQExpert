@@ -58,7 +58,15 @@ public class FlowchartCase6 extends KnownFailure {
 				for (TTCPartition ttcp : subSystem.getTtcPartitions()) {
 					if (!ttcp.isMasked()) {
 
-						TTSState currentState = TTSState.getByCode(ttcp.getTtsState());
+						String ttsState = ttcp.getTtsState();
+
+						if (ttsState == null) {
+							// for uTCA FEDs we need to get the TTS state from TCDS directly
+							ttsState = ttcp.getTcds_pm_ttsState();
+						}
+
+						TTSState currentState = TTSState.getByCode(ttsState);
+
 						if (currentState == TTSState.BUSY || currentState == TTSState.WARNING) {
 
 							for (FED fed : ttcp.getFeds()) {
