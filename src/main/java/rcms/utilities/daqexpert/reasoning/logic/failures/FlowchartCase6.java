@@ -71,7 +71,8 @@ public class FlowchartCase6 extends KnownFailure {
 
 							for (FED fed : ttcp.getFeds()) {
 
-								if (!fed.isFmmMasked() && !fed.isFrlMasked()) {
+								if (!fed.isFmmMasked() && (! fed.isHasSLINK() || !fed.isFrlMasked())) {
+
 									TTSState currentFedState = TTSState.getByCode(fed.getTtsState());
 									if ((currentFedState == TTSState.BUSY || currentFedState == TTSState.WARNING)
 											&& fed.getPercentBackpressure() > 0F) {
