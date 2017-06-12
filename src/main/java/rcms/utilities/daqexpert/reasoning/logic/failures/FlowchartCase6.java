@@ -75,7 +75,7 @@ public class FlowchartCase6 extends KnownFailure {
 
 									TTSState currentFedState = TTSState.getByCode(fed.getTtsState());
 									if ((currentFedState == TTSState.BUSY || currentFedState == TTSState.WARNING)
-											&& fed.getPercentBackpressure() > 0F) {
+											&& (! fed.isHasSLINK() || fed.getPercentBackpressure() > 0F)) {
 
 										context.register("TTCP", ttcp.getName());
 										context.register("TTCPSTATE", currentState.name());
