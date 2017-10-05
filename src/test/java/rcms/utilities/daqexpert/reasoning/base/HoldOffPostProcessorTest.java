@@ -8,42 +8,41 @@ import rcms.utilities.daqaggregator.data.DAQ;
 
 import java.util.Map;
 
-public class HoldOffLmTest {
+public class HoldOffPostProcessorTest {
 
     @Test
     public void satisfiedWithHoldoff() {
 
-        HoldOffLm daqOnFire = new DaqOnFire(1000L);
-        Logger.getLogger(HoldOffLm.class).setLevel(Level.DEBUG);
+        DaqOnFire daqOnFire = new DaqOnFire(1000L);
+        Logger.getLogger(HoldOffPostProcessor.class).setLevel(Level.DEBUG);
 
         DAQ daq = new DAQ();
-
 
         daq.setDaqState("NotOnFire");
         daq.setLastUpdate(0);
         Assert.assertFalse(daqOnFire.satisfied(daq, null));
-        Assert.assertFalse(daqOnFire.satisfiedWithHoldoff(daq, null));
+        Assert.assertFalse(daqOnFire.satisfiedWithPostProcessing(daq, null));
 
 
         daq.setDaqState("OnFire");
         daq.setLastUpdate(1000);
         Assert.assertTrue(daqOnFire.satisfied(daq, null));
-        Assert.assertFalse(daqOnFire.satisfiedWithHoldoff(daq, null));
+        Assert.assertFalse(daqOnFire.satisfiedWithPostProcessing(daq, null));
 
 
         daq.setDaqState("OnFire");
         daq.setLastUpdate(2000);
         Assert.assertTrue(daqOnFire.satisfied(daq, null));
-        Assert.assertTrue(daqOnFire.satisfiedWithHoldoff(daq, null));
+        Assert.assertTrue(daqOnFire.satisfiedWithPostProcessing(daq, null));
 
     }
 
 }
 
-class DaqOnFire extends HoldOffLm {
+class DaqOnFire extends SimpleLogicModule {
 
     public DaqOnFire(Long holdOffPeriod) {
-        super(holdOffPeriod);
+        super(new HoldOffPostProcessor(holdOffPeriod));
     }
 
     @Override
