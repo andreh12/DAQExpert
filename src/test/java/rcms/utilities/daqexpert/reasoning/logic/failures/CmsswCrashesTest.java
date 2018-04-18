@@ -93,5 +93,34 @@ public class CmsswCrashesTest {
         return snapshot;
     }
 
+		@Test
+		public void testIssue170() throws URISyntaxException {
+			
+			final String snapshots[] = {
+				"1522085133586.json.gz", // 0 FUs crashed       +0.000 sec
+				"1522085135697.json.gz", // 120 FUs crashed     +2.111 sec
+				"1522085138381.json.gz", // 1280 FUs crashed    +4.795 sec
+				"1522085141390.json.gz", // 12596 FUs crashed   +7.804 sec
+				"1522085143859.json.gz", // 13792 FUs crashed  +10.273 sec
+				"1522085146549.json.gz", // 16160 FUs crashed  +12.963 sec
+				"1522085149654.json.gz", // 16208 FUs crashed  +16.068 sec
+				"1522085154259.json.gz", // 16208 FUs crashed  +20.673 sec
+			};
+			
+			for (int i = 0; i < snapshots.length; ++i) {
+				
+				String snapshotFname = snapshots[i];
+				DAQ daq = FlowchartCaseTestBase.getSnapshot(snapshotFname);
+				
+				boolean result = module.satisfied(daq, results);
+				
+				System.out.println("snapshot " + snapshotFname + " module.satisifed: " + result);
+				
+				if (i == snapshots.length - 1) {
+					// at least at the last snapshot we must detect a failure
+					Assert.assertTrue(result);
+				}
+			}
+		}
 }
 
